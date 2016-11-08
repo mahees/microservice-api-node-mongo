@@ -1,0 +1,23 @@
+version: '2'
+services:
+  web:
+    build: .
+    volumes:
+      - .:/src
+    working_dir: /src
+    container_name: micro-api-web1
+    ports:
+      - "9000:9000"
+    depends_on:
+      - mongodb
+    links:
+      - "mongodb:mongodb"
+    environment:
+        PORT: 9000
+        MONGODB_ADDRESS: "mongodb"
+        NODE_ENV: development
+  mongodb:
+    image: mongo:3.2.10
+    container_name: micro-api-mongodb1
+    ports:
+      - "27027:27017"

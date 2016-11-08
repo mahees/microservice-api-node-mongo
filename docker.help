@@ -1,0 +1,63 @@
+nodemon -x docker-compose up
+docker-compose up -d
+
+docker build -t my-nodejs-app .
+docker run -it --rm --name my-running-app -p 9000:9000 my-nodejs-app 
+
+http://www.bogotobogo.com/DevOps/Docker/Docker-Cheat-Sheet.php
+
+//docker compose
+
+Remove stopped containers
+docker-compose rm
+
+Create and start containers
+docker-compose up -d
+
+List containers
+docker-compose ps
+
+You can also see the logs of the running containers
+docker-compose logs
+docker-compose logs web
+
+Stop services
+docker-compose stop
+
+Remove stopped containers
+docker-compose rm
+
+Enter a container
+docker exec -it dockercomposeangulartutum_mongo_1 bash
+
+
+//dockerfile
+
+Now we can build our image like this:
+
+docker build -t my-node-app .
+
+Then we can run our container based on this image:
+
+docker run -it --name=my-node-app-container -p 3000:3000 my-node-app
+
+docker stop my-node-app-container
+docker rm my-node-app-container
+docker build -t my-node-app .
+docker run -it --name=my-node-app-container -p 3000:3000 my-node-app
+
+Also this happens quite fast, we can get it even faster by mounting our local project folder as a volume for our container:
+
+docker build -t my-node-app .
+docker run -d -it --name=my-node-app-container -v $(pwd):/app -p 3000:3000 my-node-app
+By adding the -v $(pwd):/app parameter to our docker run command, we're mapping the local project folder into the /app folder in our container.
+
+We have two options to re-initialize the container: restart the container or kill it and run it again.
+
+Restarting the container is a single command: docker restart my-node-app-container.
+Also this command is pretty simple, it may take a few seconds to gracefully stop and start the container.
+
+The second option is a bit faster and looks like this:
+
+docker kill my-node-app-container
+docker run -d -it --name=my-node-app-container -v $(pwd):/app -p 3000:3000 my-node-app
